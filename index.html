@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="theme-color"
+      content="#101216"
+    />
+    <meta
+      name="description"
+      content="Không gian âm nhạc cá nhân của nghệ sĩ."
+    />
+    <title>Blue Hour — Không gian âm nhạc</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <section class="splash-screen" id="splash-screen" aria-label="Bắt đầu nghe nhạc">
+      <div class="splash-content">
+        <div class="splash-avatar-frame">
+          <svg class="splash-avatar" viewBox="0 0 400 400" role="img" aria-label="Ảnh minh họa nghệ sĩ trên nền xanh">
+            <defs>
+              <linearGradient id="splash-sky" x1="30" y1="10" x2="360" y2="400" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#75bdff" />
+                <stop offset=".48" stop-color="#2f7fc3" />
+                <stop offset="1" stop-color="#16375d" />
+              </linearGradient>
+              <radialGradient id="splash-glow" cx="0" cy="0" r="1" gradientTransform="matrix(0 193 -193 0 200 112)" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#b6e2ff" stop-opacity=".85" />
+                <stop offset="1" stop-color="#b6e2ff" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="splash-shirt" x1="97" y1="255" x2="300" y2="407" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#e6f4ff" />
+                <stop offset="1" stop-color="#92c8f2" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="400" fill="url(#splash-sky)" />
+            <circle cx="200" cy="137" r="184" fill="url(#splash-glow)" />
+            <path d="M47 400c12-71 49-122 110-143l43 28 44-28c61 21 98 72 110 143H47Z" fill="url(#splash-shirt)" />
+            <path d="M144 260c11 32 31 51 56 51s45-19 56-51l-19-13h-74l-19 13Z" fill="#d78c75" />
+            <ellipse cx="200" cy="169" rx="76" ry="91" fill="#f1b49a" />
+            <path d="M125 177c-8-81 24-123 79-123 60 0 87 44 72 117-8-12-17-24-25-38-34 20-76 25-122 22l-4 22Z" fill="#26334b" />
+            <path d="M149 178c12-6 23-6 34-1M218 177c12-5 24-5 35 1" stroke="#573d40" stroke-width="5" stroke-linecap="round" />
+            <path d="M184 216c10 7 22 7 32 0" stroke="#a95758" stroke-width="4" stroke-linecap="round" />
+            <path d="m161 159 14-4M224 155l14 4" stroke="#26334b" stroke-width="7" stroke-linecap="round" />
+            <path d="M161 293c11 20 24 30 39 30s29-10 40-30" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3" />
+          </svg>
+        </div>
+        <p class="splash-eyebrow">Blue Hour · Một không gian âm nhạc</p>
+        <h1 class="splash-title" id="splash-title">Một bản nhạc của riêng mình</h1>
+        <p class="splash-artist" id="splash-artist">Tên nghệ sĩ</p>
+        <button class="splash-button" id="splash-play" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5.8c0-.8.9-1.3 1.6-.9l9.1 5.4c.7.4.7 1.4 0 1.8l-9.1 5.4c-.7.4-1.6-.1-1.6-.9V5.8Z" />
+          </svg>
+          <span>Chạm để thưởng thức</span>
+        </button>
+        <p class="splash-hint">Đeo tai nghe và dành một chút thời gian cho âm nhạc</p>
+      </div>
+    </section>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Blue Hour — trang chủ">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 14V10M8 18V6M12 15V9M16 19V5M20 13v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span>BLUE HOUR</span>
+        </a>
+        <div class="listening-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>GÓC NHỎ CỦA MÌNH</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="player-card" aria-label="Trang âm nhạc cá nhân">
+          <div class="artist-panel">
+            <p class="eyebrow">Âm nhạc · Ký ức · Cảm xúc</p>
+            <div class="avatar-frame">
+              <svg class="avatar-art" viewBox="0 0 400 400" role="img" aria-label="Ảnh minh họa nghệ sĩ trên nền xanh">
+                <defs>
+                  <linearGradient id="sky" x1="30" y1="10" x2="360" y2="400" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#75bdff" />
+                    <stop offset=".48" stop-color="#2f7fc3" />
+                    <stop offset="1" stop-color="#16375d" />
+                  </linearGradient>
+                  <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="matrix(0 193 -193 0 200 112)" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#b6e2ff" stop-opacity=".85" />
+                    <stop offset="1" stop-color="#b6e2ff" stop-opacity="0" />
+                  </radialGradient>
+                  <linearGradient id="shirt" x1="97" y1="255" x2="300" y2="407" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#e6f4ff" />
+                    <stop offset="1" stop-color="#92c8f2" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="400" fill="url(#sky)" />
+                <circle cx="200" cy="137" r="184" fill="url(#glow)" />
+                <path d="M47 400c12-71 49-122 110-143l43 28 44-28c61 21 98 72 110 143H47Z" fill="url(#shirt)" />
+                <path d="M144 260c11 32 31 51 56 51s45-19 56-51l-19-13h-74l-19 13Z" fill="#d78c75" />
+                <ellipse cx="200" cy="169" rx="76" ry="91" fill="#f1b49a" />
+                <path d="M125 177c-8-81 24-123 79-123 60 0 87 44 72 117-8-12-17-24-25-38-34 20-76 25-122 22l-4 22Z" fill="#26334b" />
+                <path d="M149 178c12-6 23-6 34-1M218 177c12-5 24-5 35 1" stroke="#573d40" stroke-width="5" stroke-linecap="round" />
+                <path d="M184 216c10 7 22 7 32 0" stroke="#a95758" stroke-width="4" stroke-linecap="round" />
+                <path d="m161 159 14-4M224 155l14 4" stroke="#26334b" stroke-width="7" stroke-linecap="round" />
+                <path d="M161 293c11 20 24 30 39 30s29-10 40-30" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3" />
+              </svg>
+            </div>
+            <h1 class="artist-name" id="artist-name">Tên nghệ sĩ</h1>
+            <p class="artist-description">
+              Một góc nhỏ để chia sẻ những giai điệu mình yêu và những câu chuyện phía sau chúng.
+            </p>
+            <div class="artist-tags" aria-label="Thể loại yêu thích">
+              <span class="tag">Indie pop</span>
+              <span class="tag">Dreamy</span>
+              <span class="tag">Vietnamese</span>
+            </div>
+          </div>
+
+          <div class="record-panel">
+            <div class="record-stage" aria-label="Đĩa vinyl màu đen với nhãn xanh">
+              <div class="record-halo"></div>
+              <div class="vinyl">
+                <div class="vinyl-label">
+                  <img class="cover-art" id="cover-art" alt="" />
+                </div>
+              </div>
+            </div>
+
+            <div class="record-caption">
+              <div class="track-heading">
+                <div>
+                  <h2 class="track-title" id="track-title">Một bản nhạc của riêng mình</h2>
+                  <p class="track-artist" id="track-artist">Tên nghệ sĩ</p>
+                </div>
+                <div class="sound-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <input
+                class="progress"
+                id="audio-progress"
+                type="range"
+                min="0"
+                max="0"
+                value="0"
+                step="0.1"
+                aria-label="Tua bài hát"
+                aria-valuetext="0:00"
+                disabled
+              />
+              <div class="track-time">
+                <span id="current-time">0:00</span>
+                <span id="duration">--:--</span>
+              </div>
+              <p class="audio-status" id="audio-status" role="status" aria-live="polite"></p>
+              <div class="player-controls" aria-label="Điều khiển âm thanh">
+                <button class="seek-control" id="seek-back" type="button" aria-label="Tua lại 5 giây">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4.5 8.5V4.8m0 3.7h3.7M5 8.4a8 8 0 1 1-1 6.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>-5s</span>
+                </button>
+                <button class="play-control" id="play-toggle" type="button" aria-label="Phát nhạc" aria-pressed="false">
+                  <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.8c0-.8.9-1.3 1.6-.9l9.1 5.4c.7.4.7 1.4 0 1.8l-9.1 5.4c-.7.4-1.6-.1-1.6-.9V5.8Z" /></svg>
+                  <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5.5A1.5 1.5 0 0 1 8.5 4h1A1.5 1.5 0 0 1 11 5.5v13A1.5 1.5 0 0 1 9.5 20h-1A1.5 1.5 0 0 1 7 18.5v-13Zm6 0A1.5 1.5 0 0 1 14.5 4h1A1.5 1.5 0 0 1 17 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-13Z" /></svg>
+                </button>
+                <button class="seek-control" id="seek-forward" type="button" aria-label="Tua tới 5 giây">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M19.5 8.5V4.8m0 3.7h-3.7m3.2-.1a8 8 0 1 0 1 6.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>+5s</span>
+                </button>
+              </div>
+              <div class="waveform" id="waveform" role="img" aria-label="Sóng âm thanh, đang tạm dừng"></div>
+              <nav class="track-selector" id="track-selector" aria-label="Chọn bài hát"></nav>
+            </div>
+          </div>
+        </section>
+
+        <section class="lyrics-panel" aria-labelledby="lyrics-heading">
+          <h2 class="lyrics-heading" id="lyrics-heading">Lời bài hát</h2>
+          <p class="lyrics-subtitle">Theo dõi từng giai điệu</p>
+          <ol class="lyrics-list" id="lyrics-list" aria-label="Lời bài hát đồng bộ"></ol>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Được làm bằng <span class="footer-accent">âm nhạc</span>.</span>
+        <span>© 2026 BLUE HOUR</span>
+      </footer>
+    </div>
+    <audio id="audio-player" preload="metadata"></audio>
+    <script defer src="js/tracks.js"></script>
+    <script defer src="js/app.js"></script>
+  </body>
+</html>
