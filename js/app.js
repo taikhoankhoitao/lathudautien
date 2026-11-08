@@ -6,17 +6,12 @@ const initialTrackNumber =
     ? requestedTrack
     : 1;
 const audio = document.querySelector("#audio-player");
-audio.crossOrigin = "anonymous";
 const playButton = document.querySelector("#play-toggle");
 const vinyl = document.querySelector(".vinyl");
 const progress = document.querySelector("#audio-progress");
 const currentTimeDisplay = document.querySelector("#current-time");
 const durationDisplay = document.querySelector("#duration");
 const status = document.querySelector("#audio-status");
-const splash = document.querySelector("#splash-screen");
-const splashButton = document.querySelector("#splash-play");
-const splashTitle = document.querySelector("#splash-title");
-const splashArtist = document.querySelector("#splash-artist");
 const trackTitle = document.querySelector("#track-title");
 const trackArtist = document.querySelector("#track-artist");
 const artistName = document.querySelector("#artist-name");
@@ -53,6 +48,9 @@ function renderWaveform() {
 }
 
 function initializeAudioAnalyser() {
+  const audioUrl = new URL(audio.currentSrc || audio.src, document.baseURI);
+  if (audioUrl.origin !== window.location.origin) return;
+
   const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextConstructor) {
     status.textContent = "Trình duyệt này chưa hỗ trợ phân tích sóng âm thời gian thực.";
@@ -186,6 +184,59 @@ function playAudio() {
   return audio.play();
 }
 
+function getPlaybackErrorMessage(error) {
+  if (audio.error) {
+    switch (audio.error.code) {
+      case MediaError.MEDIA_ERR_ABORTED:
+        return "Tải bài hát đã bị hủy. Hãy thử bấm Play lại.";
+      case MediaError.MEDIA_ERR_NETWORK:
+        return "Lỗi mạng khi tải bài hát. Hãy kiểm tra kết nối và đường dẫn audioSrc.";
+      case MediaError.MEDIA_ERR_DECODE:
+        return "Tệp âm thanh không đọc được hoặc bị hỏng. Hãy kiểm tra lại tệp MP3.";
+      case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+        return "Không hỗ trợ nguồn âm thanh này. Hãy kiểm tra URL và định dạng trong audioSrc.";
+      default:
+        return "Không thể tải bài hát. Hãy kiểm tra URL audioSrc và thử lại.";
+    }
+  }
+
+  if (error?.name === "NotAllowedError") {
+    return "Trình duyệt từ chối phát nhạc. Hãy bấm Play để thử lại.";
+  }
+  if (error?.name === "NotSupportedError") {
+    return "Không hỗ trợ nguồn âm thanh này. Hãy kiểm tra URL và định dạng trong audioSrc.";
+  }
+  if (error?.name === "NetworkError") {
+    return "Lỗi mạng khi tải bài hát. Hãy kiểm tra kết nối và đường dẫn audioSrc.";
+  }
+  return "Không thể phát bài hát. Hãy kiểm tra kết nối và URL audioSrc.";
+}
+
+function reportPlaybackError(context, error) {
+  const audioError = audio.error;
+  const errorDetails =
+    error && typeof error === "object"
+      ? {
+          name: error.name,
+          type: error.type,
+          code: error.code,
+          message: error.message,
+        }
+      : error === undefined
+        ? undefined
+        : { message: String(error) };
+  status.textContent = getPlaybackErrorMessage(error);
+  console.error(context, {
+    track: currentTrack?.title,
+    src: audio.currentSrc || audio.src,
+    error: errorDetails,
+    mediaErrorCode: audioError?.code,
+    mediaErrorMessage: audioError?.message,
+    networkState: audio.networkState,
+    readyState: audio.readyState,
+  });
+}
+
 function renderLyrics() {
   lyricsList.replaceChildren();
   lyricElements = currentTrack.lyrics.map(({ text }, index) => {
@@ -236,8 +287,6 @@ async function selectTrack(trackNumber, { updateUrl, resumePlayback }) {
   trackTitle.textContent = currentTrack.title;
   trackArtist.textContent = currentTrack.artist;
   artistName.textContent = currentTrack.artist;
-  splashTitle.textContent = currentTrack.title;
-  splashArtist.textContent = currentTrack.artist;
   document.title = `${currentTrack.title} — ${currentTrack.artist} | Blue Hour`;
   coverArt.src = currentTrack.coverImage;
   coverArt.alt = `Bìa đĩa ${currentTrack.title}`;
@@ -270,9 +319,8 @@ async function selectTrack(trackNumber, { updateUrl, resumePlayback }) {
     try {
       await playAudio();
     } catch (error) {
-      if (selectionVersion === trackSelectionVersion && error.name !== "AbortError") {
-        status.textContent = "Không thể phát âm thanh. Hãy thử lại hoặc kiểm tra kết nối.";
-        console.error("Audio playback failed after changing track:", error);
+      if (selectionVersion === trackSelectionVersion && error?.name !== "AbortError") {
+        reportPlaybackError("Audio playback failed after changing track:", error);
       }
     }
   }
@@ -330,12 +378,6 @@ function updatePlaybackState() {
   );
 }
 
-function dismissSplash() {
-  splash.classList.add("is-hidden");
-  document.body.classList.remove("splash-open");
-  window.setTimeout(() => splash.remove(), 700);
-}
-
 function updateProgress() {
   if (Number.isFinite(audio.duration)) {
     progress.max = String(audio.duration);
@@ -353,26 +395,10 @@ playButton.addEventListener("click", async () => {
     try {
       await playAudio();
     } catch (error) {
-      status.textContent = "Không thể phát âm thanh. Hãy thử lại hoặc kiểm tra kết nối.";
-      console.error("Audio playback failed:", error);
+      reportPlaybackError("Audio playback failed:", error);
     }
   } else {
     audio.pause();
-  }
-});
-
-splashButton.addEventListener("click", async () => {
-  splashButton.disabled = true;
-  splashButton.querySelector("span").textContent = "Đang kết nối âm nhạc…";
-  status.textContent = "";
-  try {
-    await playAudio();
-    dismissSplash();
-  } catch (error) {
-    splashButton.disabled = false;
-    splashButton.querySelector("span").textContent = "Thử phát lại";
-    status.textContent = "Không thể phát âm thanh. Hãy thử lại hoặc kiểm tra kết nối.";
-    console.error("Audio playback failed from splash screen:", error);
   }
 });
 
@@ -404,17 +430,15 @@ audio.addEventListener("play", updatePlaybackState);
 audio.addEventListener("pause", updatePlaybackState);
 audio.addEventListener("ended", updatePlaybackState);
 audio.addEventListener("error", () => {
-  status.textContent = "Không tải được bản nhạc mẫu. Hãy thử lại sau.";
+  reportPlaybackError("Audio resource failed to load:", audio.error);
 });
 audio.addEventListener("playing", () => {
   status.textContent = "";
   updatePlaybackState();
   startAudioVisualizer();
-  dismissSplash();
 });
 audio.addEventListener("pause", stopAudioVisualizer);
 audio.addEventListener("ended", stopAudioVisualizer);
-document.body.classList.add("splash-open");
 renderWaveform();
 renderTrackSelector();
 void selectTrack(initialTrackNumber, { updateUrl: false, resumePlayback: false });

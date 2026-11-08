@@ -1,4 +1,3 @@
-# Blue Hour
 
 Trang nghe nhạc cá nhân dạng tĩnh. Mỗi phần có tệp riêng để dễ chỉnh sửa:
 
@@ -13,3 +12,5 @@ bài thứ hai; nếu bỏ tham số hoặc giá trị không hợp lệ, trang 
 
 Các đường dẫn trong playlist là dữ liệu mẫu. Thay `audioSrc` và `coverImage`
 bằng đường dẫn tệp thật trước khi phát hành.
+
+
